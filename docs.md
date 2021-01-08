@@ -48,7 +48,7 @@ Constructs a `Path` from the specified `String` `source`. `source` should be a v
 
 Constructs a `Path` from the specified `String` `source`, which also matches the request method `method`. `source` should be a valid URI pathname.
 
-#### `boolean matches(java.net.URI path, Method method)`
+#### `boolean matches(URI path, Method method)`
 
 Checks whether the specified `URI` and request method `method` matches the `Path`. Used internally.
 
@@ -68,7 +68,7 @@ The `Request` class represents an incoming HTTP request.
 * `final Map<String, List<String>> headers` - The request headers
 * `final Method method` - The request method
 
-#### `Request(com.sun.net.httpserver.HttpExchange httpExchange)`
+#### `Request(HttpExchange httpExchange)`
 
 Constructs from `HttpExchange` `httpExchange`. Intended to be used internally only.
 
@@ -95,7 +95,7 @@ The `Response` class represents an outgoing HTTP response.
 * `int responseCode` - The response status code (default is `200`)
 * `final Map<String, List<String>>` - The response headers
 
-#### `Response(com.sun.net.httpserver.HttpExchange httpExchange)`
+#### `Response(HttpExchange httpExchange)`
 
 Constructs from `HttpExchange` `httpExchange`. Intended to be used internally only.
 
@@ -167,3 +167,14 @@ The `RouterPoint` enum represents the purpose of a router.
 * `POSTHANDLER` - The handler is executed after main request handlers
 * `ERROR` - The handler is to be executed on errors
 
+### `Routing` class
+
+Represents an individual request's handlers and routing through the backend.
+
+#### `Routing(List<Route> routing, Request req, Response res)`
+
+Constructs a `Routing` and starts it. `routing` is a list of the routes that the `Routing` will take, and `req` and `res` are passed to the handlers.
+
+#### `void next()`
+
+Calls the next handler in the `routing` if existent, and passes `req`, `res` and `this` to the handler.
