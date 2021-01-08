@@ -5,14 +5,14 @@
 * [Contents](#contents)
 * [About](#about)
 * [Reference](#reference)
-	* Method
-	* Path
-	* Request
-	* Response
-	* Route
-	* RouterPoint
-	* Routing
-	* Server
+	* [Method](#method-enum)
+	* [Path](#path-class)
+	* [Request](#request-class)
+	* [Response](#response-class)
+	* [Route](#route-class)
+	* [RouterPoint](#routerpoint-enum)
+	* [Routing](#routing-class)
+	* [Server](#server-class)
 
 ## About
 
