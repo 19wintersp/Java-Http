@@ -70,7 +70,7 @@ The `Request` class represents an incoming HTTP request.
 
 #### `Request(com.sun.net.httpserver.HttpExchange httpExchange)`
 
-Constructs from `HttpExchange` `httpExchange`.
+Constructs from `HttpExchange` `httpExchange`. Intended to be used internally only.
 
 #### `List<Byte> getBody()`
 
@@ -95,4 +95,75 @@ The `Response` class represents an outgoing HTTP response.
 * `int responseCode` - The response status code (default is `200`)
 * `final Map<String, List<String>>` - The response headers
 
+#### `Response(com.sun.net.httpserver.HttpExchange httpExchange)`
+
+Constructs from `HttpExchange` `httpExchange`. Intended to be used internally only.
+
+#### `void write(byte[] data)`
+
+Appends `data` to the response body. Note that this is not directly appended to the output stream and is stored internally.
+
+#### `void write(Byte[] data)`
+
+Appends `data` to the response body. Note that this is not directly appended to the output stream and is stored internally.
+
+#### `void write(List<Byte> data)`
+
+Appends `data` to the response body. Note that this is not directly appended to the output stream and is stored internally.
+
+#### `void write(String data)`
+
+Appends `data` to the response body. Note that this is not directly appended to the output stream and is stored internally.
+
+#### `void writeHeader(String name, String value)`
+
+Sets response header `name` to `value`. This is a convenience method, and `headers` can be modified directly.
+
+#### `void writeHeader(String name, List<String> value)`
+
+Sets response header `name` to multiple values stored in `value`. This is a convenience method, and `headers` can be modified directly.
+
+#### `void writeHeader(String name, String[] value)`
+
+Sets response header `name` to multiple values stored in `value`. This is a convenience method, and `headers` can be modified directly.
+
+#### `void status(int code)`
+
+Sets the response status code. This is a convenience method, and `responseCode` can be modified directly.
+
+#### `boolean end(boolean cancel)`
+
+Ends the response and sends headers and body to the client. If `cancel` is `true`, it will cancel the request and return no data. It returns `true` on success and `false` on error.
+
+#### `boolean end()`
+
+Same as `boolean end(boolean)`, but sets `cancel` to false.
+
+#### `boolean hasEnded()`
+
+Returns whether the response has already ended.
+
+### `Route` class
+
+The `Route` class is a specific handler for a request.
+
+#### `void callback(Request req, Response res, Routing route)`
+
+The main callback for this handler. By default, it calls [`route.next()`](#void-next) and returns, which has the effect of continuing the routing chain. It is intended to be overridden in actual handlers:
+
+```java
+Route myHandler = new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		/* ... */
+	}
+};
+```
+
+### `RouterPoint` enum
+
+The `RouterPoint` enum represents the purpose of a router.
+
+* `PREHANDLER` - The handler is executed before main request handlers
+* `POSTHANDLER` - The handler is executed after main request handlers
+* `ERROR` - The handler is to be executed on errors
 
