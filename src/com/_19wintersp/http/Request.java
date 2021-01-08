@@ -87,8 +87,8 @@ public class Request {
 	public void set(String key, Object value) {
 		this.exchange.setAttribute(key, value);
 	}
-	public void get(String key) {
-		this.exchange.getAttribute(key);
+	public Object get(String key) {
+		return this.exchange.getAttribute(key);
 	}
 	
 	private Map<String, String> parseQuery(String query) {
