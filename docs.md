@@ -15,6 +15,13 @@
 	* [Server](#server-class)
 * [Tutorial](#tutorial)
 * [Examples](#examples)
+	* [Hello world](#hello-world-example)
+	* [Router](#router-example)
+	* [Error handler](#error-handler-example)
+	* [Query parameters](#query-parameters-example)
+	* [POST echoer](#post-echoer-example)
+	* [Multiple methods](#multiple-methods-example)
+	* [IP finder](#ip-finder-example)
 
 ## About
 
@@ -298,4 +305,89 @@ svr.use(RouterPoint.ERROR, new Route() {
 });
 /* more routes here */
 svr.listen(80);
+```
+
+### Query parameters example
+
+```java
+final Server svr = new Server();
+svr.all("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		if (req.query.containsKey("name")) {
+			res.write("Hi there ");
+			res.write(req.get("name"));
+		} else {
+			res.write("What's your name?");
+		}
+		res.end();
+		route.next();
+	}
+});
+svr.listen(80);
+```
+
+### POST echoer example
+
+```java
+final Server svr = new Server();
+svr.post("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		res.write("Here's what you sent:\n\n");
+		res.write(req.getBodyString());
+		res.end();
+		route.next();
+	}
+});
+svr.all("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		res.write("POST some data to /");
+		res.end();
+		route.next();
+	}
+});
+svr.listen(80);
+```
+
+### Multiple methods example
+
+```java
+final Server svr = new Server();
+svr.get("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		res.write("GET");
+		res.end();
+		route.next();
+	}
+});
+svr.post("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		res.write("POST");
+		res.end();
+		route.next();
+	}
+});
+svr.all("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		res.write("Something else");
+		res.end();
+		route.next();
+	}
+});
+svr.listen(80);
+```
+
+### IP finder example
+
+```java
+final Server svr = new Server();
+svr.get("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		res.write("Your IP address is: ");
+		res.write(req.remoteAddress.substring(1);
+		res.end();
+		route.next();
+	}
+});
+svr.listen(80);
+```
 ```
