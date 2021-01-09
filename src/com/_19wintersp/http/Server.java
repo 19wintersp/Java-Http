@@ -56,6 +56,7 @@ class Handler implements HttpHandler {
 		routing.addAll(this.postRouters);
 		
 		new Routing(routing, req, res);
+		res.end();
 	}
 }
 
