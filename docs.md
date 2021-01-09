@@ -178,3 +178,41 @@ Constructs a `Routing` and starts it. `routing` is a list of the routes that the
 #### `void next()`
 
 Calls the next handler in the `routing` if existent, and passes `req`, `res` and `this` to the handler.
+
+### `Server` class
+
+The `Server` class forms the main API for interacting with the library. `Server` handles the main logic and handling of requests.
+
+* `int port` - The port the server listens on (default is `-1`)
+
+#### `Server()`
+
+Initialises the server.
+
+#### `boolean isListening()`
+
+Returns whether the server is actively listening for requests, or whether it is idle.
+
+#### `void listen()`
+
+Starts listening for requests using `int port`. Throws an exception if it is not set (`== -1`), or if already listening.
+
+#### `void listen(int port)`
+
+Starts listening for requests using the specified port, and sets `int port` to the given port. Throws an exception if already listening.
+
+#### `void stop()`
+
+Stops listening for requests. Throws an exception if not already listening.
+
+#### `boolean isListening()`
+
+Returns whether the server is listening, or if it is idle.
+
+#### `void use(RouterPoint point, Route handler)`
+
+Adds `handler` to the stack of routers at the specified `RouterPoint`. Routers are added in the order of the calls to `use`.
+
+#### `void METHOD(String path, Route handler)`
+
+Adds `handler` as the handler for `path`, which is converted to a `Path`. This method exists for all `Method`s excluding `Method.OTHER`.
