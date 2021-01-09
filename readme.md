@@ -6,4 +6,4 @@ ExpressJS-style server library which allows easy creation of a HTTP server with 
 
 Note that if you are looking for an actually *good* library, look elsewhere: there are already countless better options. I'm not normally a Java programmer.
 
-Licensed under the MIT license. For documentation, see [docs.md](docs.md).
+Licensed under the MIT license. For tutorial, examples and reference, see [docs.md](docs.md).
