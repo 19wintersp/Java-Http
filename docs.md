@@ -251,4 +251,51 @@ This is a basic tutorial to get started with the library. The main code is in th
 	svr.listen(80);
 	```
 
-6. Run your program, and then your server will begin running on port 80.
+6. Run your program, and then your server will begin running on port 80. When you request to "/", the message gets returned.
+
+## Examples
+
+These are some basic examples. All examples assume inclusion of the JAR as well as importing `com._19wintersp.http.*`.
+
+### Hello World example
+
+```java
+final Server svr = new Server();
+svr.all("/", new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		res.write("Hello world!");
+		res.end();
+		route.next();
+	}
+});
+svr.listen(80);
+```
+
+### Router example
+
+```java
+final Server svr = new Server();
+svr.use(RouterPoint.PREROUTE, new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		System.out.println("Request to " + req.urlPath);
+		route.next();
+	}
+});
+/* more routes here */
+svr.listen(80);
+```
+
+### Error handler example
+
+```java
+final Server svr = new Server();
+svr.use(RouterPoint.ERROR, new Route() {
+	public void callback(Request req, Response res, Routing route) {
+		System.out.println("Error!");
+		res.write("An error occurred!");
+		res.end();
+	}
+});
+/* more routes here */
+svr.listen(80);
+```
