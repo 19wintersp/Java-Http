@@ -13,6 +13,8 @@
 	* [RouterPoint](#routerpoint-enum)
 	* [Routing](#routing-class)
 	* [Server](#server-class)
+* [Tutorial](#tutorial)
+* [Examples](#examples)
 
 ## About
 
@@ -216,3 +218,37 @@ Adds `handler` to the stack of routers at the specified `RouterPoint`. Routers a
 #### `void METHOD(String path, Route handler)`
 
 Adds `handler` as the handler for `path`, which is converted to a `Path`. This method exists for all `Method`s excluding `Method.OTHER`.
+
+## Tutorial
+
+This is a basic tutorial to get started with the library. The main code is in the [Hello World example](#hello-world-example).
+
+1. Download the latest release JAR, and add it to your build path.
+
+2. Import the library in your code:
+	```java
+	import com._19wintersp.http.*;
+	```
+
+3. In your `main` (or wherever you want to start the server), create your `Server` instance:
+	```java
+	final Server svr = new Server();
+	```
+
+4. Add a route to the server:
+	```java
+	svr.all("/", new Route() {
+		public void callback(Request req, Response res, Routing route) {
+			res.write("Hello world!");
+			res.end();
+			route.next();
+		}
+	});
+	```
+
+5. Start listening:
+	```java
+	svr.listen(80);
+	```
+
+6. Run your program, and then your server will begin running on port 80.
