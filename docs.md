@@ -383,7 +383,7 @@ final Server svr = new Server();
 svr.get("/", new Route() {
 	public void callback(Request req, Response res, Routing route) {
 		res.write("Your IP address is: ");
-		res.write(req.remoteAddress.substring(1);
+		res.write(req.remoteAddress.substring(1));
 		res.end();
 		route.next();
 	}
